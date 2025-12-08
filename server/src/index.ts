@@ -1,37 +1,33 @@
 import express, { Request, Response } from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import { Client } from './types'
+import { getClientsFromSheet, addClientToSheet } from './googleSheets'
 
-// Загружаем переменные окружения из .env (потом пригодится для Google)
+
 dotenv.config()
 
-// Создаём приложение Express
 const app = express()
 
-// Включаем CORS и JSON-парсер
 app.use(cors())
 app.use(express.json())
 
-// Временное хранилище клиентов в памяти
-let clients: Client[] = [
-  {
-    id: 1,
-    name: 'Test Client',
-    email: 'test@example.com',
-    phone: '0212345678',
-    note: 'First test client',
-    lastContacted: '2025-12-01',
-  },
-]
-
-// GET /clients — вернуть всех клиентов
-app.get('/clients', (req: Request, res: Response) => {
-  res.json(clients)
+// =============================
+// GET /clients — all clients from Google Sheets
+// =============================
+app.get('/clients', async (req: Request, res: Response) => {
+  try {
+    const clients = await getClientsFromSheet()
+    res.json(clients)
+  } catch (err) {
+    console.error('Error loading clients:', err)
+    res.status(500).json({ message: 'Failed to load clients' })
+  }
 })
 
-// POST /clients — добавить клиента
-app.post('/clients', (req: Request, res: Response) => {
+// =============================
+// POST /clients — add client to Google Sheets
+// =============================
+app.post('/clients', async (req: Request, res: Response) => {
   const { name, email, phone, note } = req.body as {
     name: string
     email?: string
@@ -43,21 +39,16 @@ app.post('/clients', (req: Request, res: Response) => {
     return res.status(400).json({ message: 'Name is required' })
   }
 
-  const newClient: Client = {
-    id: clients.length + 1,
-    name,
-    email,
-    phone,
-    note,
-    lastContacted: new Date().toISOString().slice(0, 10), // YYYY-MM-DD
+  try {
+    const newClient = await addClientToSheet({ name, email, phone, note })
+    return res.status(201).json(newClient)
+  } catch (err) {
+    console.error('Error adding client:', err)
+    return res.status(500).json({ message: 'Failed to add client' })
   }
-
-  clients.push(newClient)
-
-  return res.status(201).json(newClient)
 })
 
-// Запускаем сервер
+
 const PORT = process.env.PORT || 3001
 
 app.listen(PORT, () => {
