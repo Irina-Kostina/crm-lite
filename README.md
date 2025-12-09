@@ -192,7 +192,6 @@ npm run dev
 Start frontend:
 
 ```bash
-Copy code
 cd client
 npm install
 npm run dev
