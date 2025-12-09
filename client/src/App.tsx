@@ -3,11 +3,11 @@ import './App.css'
 
 import ClientsPage from './pages/ClientsPage'
 import TasksPage, { type Task } from './pages/TasksPage'
-import MessagesPage from './pages/MessagesPage'
+import MessagesPage, { type Message } from './pages/MessagesPage'
 
 type Page = 'clients' | 'tasks' | 'messages'
 
-// Client type - same as backend
+// Client Type
 interface Client {
   id: number
   name: string
@@ -32,6 +32,11 @@ function App() {
   // --- Tasks state ---
   const [tasks, setTasks] = useState<Task[]>([])
   const [newTaskTitle, setNewTaskTitle] = useState('')
+
+  // --- Messages state (global feed) ---
+  const [messages, setMessages] = useState<Message[]>([])
+  const [newMessageTitle, setNewMessageTitle] = useState('')
+  const [newMessageBody, setNewMessageBody] = useState('')
 
   // --------- LOAD CLIENTS ONCE ----------
   useEffect(() => {
@@ -119,13 +124,42 @@ function App() {
     setTasks((prev) => prev.filter((task) => task.id !== id))
   }
 
+  // --------- MESSAGES: LOGIC ----------
+  const handleAddMessage = (e: FormEvent) => {
+    e.preventDefault()
+    const title = newMessageTitle.trim()
+    const body = newMessageBody.trim()
+    if (!title && !body) return
+
+    const now = new Date()
+    const createdAt = now.toISOString()
+
+    const nextId = messages.length ? messages[messages.length - 1].id + 1 : 1
+
+    const newMessage: Message = {
+      id: nextId,
+      title: title || '(no title)',
+      body,
+      createdAt,
+    }
+
+    setMessages((prev) => [newMessage, ...prev])
+
+    setNewMessageTitle('')
+    setNewMessageBody('')
+  }
+
+  const handleRemoveMessage = (id: number) => {
+    setMessages((prev) => prev.filter((m) => m.id !== id))
+  }
+
   // --------- RENDER ---------
   const currentPageLabel =
     activePage === 'clients'
       ? 'Clients'
       : activePage === 'tasks'
       ? 'Tasks'
-      : 'Messages'
+      : 'Notes'
 
   return (
     <div className="app">
@@ -170,7 +204,7 @@ function App() {
             }
             onClick={() => setActivePage('messages')}
           >
-            ✉
+            ✎
           </button>
         </nav>
 
@@ -229,7 +263,17 @@ function App() {
             />
           )}
 
-          {activePage === 'messages' && <MessagesPage />}
+          {activePage === 'messages' && (
+            <MessagesPage
+              messages={messages}
+              newMessageTitle={newMessageTitle}
+              newMessageBody={newMessageBody}
+              setNewMessageTitle={setNewMessageTitle}
+              setNewMessageBody={setNewMessageBody}
+              onAddMessage={handleAddMessage}
+              onRemoveMessage={handleRemoveMessage}
+            />
+          )}
         </main>
       </div>
     </div>
