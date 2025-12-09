@@ -14,7 +14,7 @@ Client CRM Lite is a small but real full-stack app:
 
 It’s designed for **small businesses** who currently live in spreadsheets and DMs and just want something slightly smarter – but not a full enterprise CRM.
 
-## 🔗 Google Sheets Integration
+## Google Sheets Integration
 
 This CRM is fully integrated with **Google Sheets**, which acts as a lightweight cloud database.
 
@@ -46,7 +46,7 @@ This approach keeps the system simple, transparent, and ideal for small business
 
 > Client data is **persistent** – everything lives in Google Sheets, not in memory.
 
----
+## ![Clients Page](./client/public/clients.png)
 
 ### 2. Tasks – simple todo list for follow-ups
 
@@ -62,7 +62,7 @@ This approach keeps the system simple, transparent, and ideal for small business
 
 > Tasks are stored in React state only (MVP) – ideal for demoing state management and UI logic.
 
----
+## ![Tasks Page](./client/public/tasks.png)
 
 ### 3. Notes – global message / notes feed
 
@@ -80,7 +80,7 @@ The **Messages (Notes)** page acts as a simple **activity log**:
 
 > This mimics how many CRMs handle internal notes / activity without needing real email or chat integrations.
 
----
+## ![Notes Page](./client/public/notes.png)
 
 ### 4. Modern SaaS layout & UX
 
@@ -179,7 +179,7 @@ Deploy client + server
 
 ---
 
-## 🚀 Running the project
+## Running the project
 
 Start backend:
 
