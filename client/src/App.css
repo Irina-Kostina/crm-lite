@@ -1,42 +1,163 @@
-#root {
-  max-width: 1280px;
+/* GLOBAL LAYOUT */
+.app {
+  max-width: 900px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 40px 20px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* HEADER */
+.app-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 6px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app-subtitle {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 30px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
+/* CARD */
 .card {
-  padding: 2em;
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  margin-bottom: 24px;
 }
 
-.read-the-docs {
-  color: #888;
+.card-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.card-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* FORM */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field-full {
+  grid-column: span 2;
+}
+
+.field-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.field-input {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 15px;
+  background: #fafafa;
+}
+
+.field-input:focus {
+  border-color: #4f46e5;
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(79,70,229,0.15);
+}
+
+.field-textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.primary-button {
+  background: #4f46e5;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+.primary-button:hover {
+  background: #4338ca;
+}
+
+/* TABLE */
+.clients-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.clients-table th {
+  text-align: left;
+  padding: 12px 8px;
+  font-size: 13px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid #eee;
+}
+
+.clients-table td {
+  padding: 12px 8px;
+  font-size: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar-pill {
+  width: 32px;
+  height: 32px;
+  background: #e0e7ff;
+  color: #3730a3;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.note-cell {
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pill-muted {
+  padding: 4px 10px;
+  background: #eee;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #555;
+}
+
+/* STATES */
+.muted-text {
+  color: #777;
+  font-size: 14px;
+}
+
+.error-text {
+  color: #b91c1c;
+  font-size: 14px;
 }
